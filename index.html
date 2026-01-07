@@ -3,497 +3,880 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>a tiler | Specialist Tiling Glasgow</title>
-  <meta name="description" content="Glasgow based specialist focusing on bespoke mirror mosaic designs, luxury bathrooms, and kitchens." />
-
+  <meta name="description" content="Bespoke mirror mosaics and precision tiling in Glasgow. High-end residential interiors across the West End and Southside." />
   <meta name="theme-color" content="#050505" />
 
   <style>
     :root{
-      --bg: #050505;
-      --surface: #0f0f0f;
-      --text: #ffffff;
-      --muted: #9a9a9a;
-      --border: #222;
+      --bg:#050505;
+      --bg-2:#0a0a0a;
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.62);
+      --muted-2:rgba(255,255,255,.45);
+      --line:rgba(255,255,255,.10);
+      --line-2:rgba(255,255,255,.06);
 
-      --radius: 18px;
-      --radius-pill: 999px;
+      --paper:#f3f3f3;
+      --ink:#0b0b0b;
+      --ink-muted:rgba(0,0,0,.62);
+      --ink-line:rgba(0,0,0,.10);
 
-      --shadow: 0 10px 40px rgba(0,0,0,.45);
-      --shadow-soft: 0 8px 28px rgba(0,0,0,.35);
+      --radius:24px;
+      --pill:999px;
+      --max:1180px;
+      --pad:clamp(16px, 3vw, 28px);
 
-      --max: 960px;
-      --pad: 1.5rem;
+      --font: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+              Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
 
-      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --shadow: 0 22px 70px rgba(0,0,0,.55);
+      --shadow-soft: 0 18px 55px rgba(0,0,0,.35);
 
-      --btn-grad: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
-      --focus: 0 0 0 3px rgba(255,255,255,.18);
-    }
+      --blueA: rgba(45, 86, 160, .55);
+      --blueB: rgba(20, 43, 78, .55);
 
-    *, *::before, *::after { box-sizing: border-box; }
-    * { margin: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      min-height: 100dvh;
-      background: radial-gradient(1200px 600px at 50% -10%, rgba(255,255,255,.06), transparent 55%),
-                  linear-gradient(to bottom, #060606, var(--bg));
-      color: var(--text);
-      font-family: var(--font);
-      line-height: 1.55;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: geometricPrecision;
-    }
-    a { color: inherit; text-decoration: none; }
-    p { color: var(--muted); }
-    h1, h2, h3 {
-      line-height: 1.08;
-      letter-spacing: -0.03em;
-      color: var(--text);
-    }
-    :focus-visible { outline: none; box-shadow: var(--focus); border-radius: 10px; }
-
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+      --focus: 0 0 0 3px rgba(255,255,255,.16);
     }
 
-    .wrap {
-      max-width: var(--max);
-      margin-inline: auto;
-      padding-inline: var(--pad);
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:var(--font);
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      text-rendering:geometricPrecision;
     }
-    .section {
-      padding-block: clamp(3.5rem, 7vw, 5.25rem);
-      border-top: 1px solid var(--border);
-    }
-    .section:first-of-type { border-top: 0; }
+    a{color:inherit;text-decoration:none}
+    p{margin:0;color:var(--muted);line-height:1.6}
+    h1,h2,h3{margin:0;line-height:1.02;letter-spacing:-.03em}
+    :focus-visible{outline:none;box-shadow:var(--focus);border-radius:12px}
 
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      padding: .45rem 1rem;
-      border: 1px solid #333;
-      border-radius: var(--radius-pill);
-      color: var(--muted);
-      font-size: .72rem;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      user-select: none;
-      background: rgba(255,255,255,.02);
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+    .divider{height:1px;background:var(--line);margin:0}
+    .section{padding:clamp(52px, 7vw, 90px) 0}
+    .kicker{
+      display:flex;align-items:center;gap:12px;
+      letter-spacing:.28em;text-transform:uppercase;
+      font-size:12px;color:rgba(255,255,255,.72);
+      white-space:nowrap;
     }
-
-    .skip-link {
-      position: absolute;
-      left: -999px;
-      top: 1rem;
-      padding: .8rem 1rem;
-      background: #fff;
-      color: #000;
-      border-radius: 12px;
-      z-index: 9999;
-    }
-    .skip-link:focus { left: 1rem; }
-
-    .site-header {
-      border-bottom: 1px solid var(--border);
-      padding-block: 1.25rem;
-      position: sticky;
-      top: 0;
-      backdrop-filter: blur(10px);
-      background: rgba(5,5,5,.7);
-      z-index: 50;
-    }
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    .brand {
-      display: inline-flex;
-      align-items: baseline;
-      gap: .25rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-    }
-    .brand small { color: #4b4b4b; font-weight: 800; }
-
-    .nav-links {
-      display: flex;
-      gap: 1.1rem;
-      align-items: center;
-      color: var(--muted);
-      font-size: .95rem;
-    }
-    .nav-links a:hover { color: var(--text); }
-
-    .hero {
-      padding-block: clamp(3.25rem, 8vw, 6rem);
-      border-bottom: 1px solid var(--border);
-    }
-    .hero h1 {
-      font-size: clamp(3.25rem, 9vw, 6.25rem);
-      font-weight: 900;
-      letter-spacing: -0.06em;
-      margin-top: 1rem;
-      background: linear-gradient(to bottom right, #fff, #6a6a6a);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .hero p {
-      max-width: 42ch;
-      font-size: 1.05rem;
-      line-height: 1.7;
-      margin-top: 1.1rem;
+    .kicker::before{
+      content:"";width:34px;height:2px;border-radius:2px;background:rgba(255,255,255,.55);
     }
 
-    .cta-row {
-      display: flex;
-      gap: .9rem;
-      align-items: center;
-      margin-top: 1.8rem;
-      flex-wrap: wrap;
+    /* Top bar */
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      background:rgba(5,5,5,.72);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line-2);
+    }
+    .topbar-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      height:64px;
+    }
+    .brand{
+      font-weight:800;letter-spacing:-.02em;
+    }
+    .brand span{opacity:.7}
+    .nav{
+      display:flex;gap:28px;align-items:center;
+      font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+      color:rgba(255,255,255,.76);
+    }
+    .nav a{opacity:.9}
+    .nav a:hover{opacity:1;color:#fff}
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      border-radius:var(--pill);
+      font-weight:800;
+      letter-spacing:.18em;text-transform:uppercase;
+      font-size:12px;
+      padding:12px 18px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      transition:transform .15s ease, filter .15s ease, background .15s ease;
+      user-select:none;
+      gap:10px;
+    }
+    .btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+    .btn-primary{
+      background:linear-gradient(135deg,#fff 0%, #bdbdbd 100%);
+      color:#000;border:none;
     }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem 2.6rem;
-      border-radius: var(--radius-pill);
-      font-weight: 800;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      font-size: .78rem;
-      border: 0;
-      cursor: pointer;
-      transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
-      box-shadow: 0 8px 26px rgba(255,255,255,.08);
-      user-select: none;
+    /* Hero */
+    .hero{
+      position:relative;
+      padding:clamp(64px, 10vw, 120px) 0;
+      overflow:hidden;
     }
-    .btn-primary { background: var(--btn-grad); color: #000; }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,255,255,.14); }
-
-    .btn-secondary {
-      background: rgba(255,255,255,.06);
-      border: 1px solid #2a2a2a;
-      color: var(--text);
-      box-shadow: var(--shadow-soft);
+    .hero::before{
+      content:"";
+      position:absolute;inset:-220px -180px auto -180px;
+      height:560px;
+      background:
+        radial-gradient(900px 420px at 30% 25%, rgba(255,255,255,.10), transparent 60%),
+        radial-gradient(820px 520px at 70% 15%, var(--blueA), transparent 58%),
+        radial-gradient(820px 520px at 40% 65%, var(--blueB), transparent 58%),
+        linear-gradient(180deg, rgba(255,255,255,.04), transparent 60%);
+      filter: blur(0px);
+      pointer-events:none;
     }
-    .btn-secondary:hover { filter: brightness(1.08); }
-
-    .section-head {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 1.8rem;
+    .hero-grid{
+      position:relative;
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: clamp(24px, 4vw, 56px);
+      align-items:end;
     }
-    .section-head h2 { font-size: clamp(1.8rem, 3.2vw, 2.15rem); }
-    .section-head p { max-width: 52ch; }
-
-    .grid {
-      display: grid;
-      gap: 1.25rem;
-      grid-template-columns: repeat(12, 1fr);
+    .hero-title{
+      font-size:clamp(54px, 7.4vw, 120px);
+      font-weight:900;
     }
-    .card {
-      grid-column: span 4;
-      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
-      border: 1px solid #222;
-      border-radius: var(--radius);
-      padding: 1.8rem;
-      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    .hero-title .dot{opacity:.22}
+    .hero-lead{
+      font-size:clamp(16px, 2.0vw, 22px);
+      color:rgba(255,255,255,.85);
+      max-width:40ch;
+      margin-top:14px;
+      line-height:1.25;
+      font-weight:650;
+      letter-spacing:-.02em;
     }
-    .card:hover {
-      transform: translateY(-2px);
-      border-color: #2f2f2f;
-      background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.018));
+    .hero-sub{
+      margin-top:14px;
+      font-size:14px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.55);
+      display:flex;
+      align-items:center;
+      gap:10px;
     }
-    .card h3 { font-size: 1.25rem; margin-bottom: .55rem; }
-    .card p { color: var(--muted); font-size: .98rem; line-height: 1.65; }
-
-    .reviews {
-      display: grid;
-      gap: 1.2rem;
+    .hero-sub::before{
+      content:"";
+      width:10px;height:10px;border-radius:50%;
+      background:rgba(255,255,255,.2);
     }
-    blockquote {
-      border: 1px solid #222;
-      border-radius: var(--radius);
-      padding: 1.6rem 1.6rem 1.35rem;
-      background: rgba(255,255,255,.02);
+    .hero-cta{
+      display:flex;justify-content:flex-end;
     }
-    blockquote p {
-      color: #e7e7e7;
-      font-size: 1.05rem;
-      font-style: italic;
-      line-height: 1.7;
+    .callbar{
+      width:100%;
+      max-width:520px;
+      display:flex;align-items:center;justify-content:center;
+      border-radius:var(--pill);
+      padding:18px 20px;
+      background:#fff;color:#000;
+      font-weight:900;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      font-size:12px;
+      gap:10px;
+      box-shadow:0 22px 65px rgba(0,0,0,.45);
     }
-    cite {
-      display: block;
-      margin-top: 1rem;
-      color: var(--muted);
-      font-size: .78rem;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      font-style: normal;
-      font-weight: 700;
+    .callbar svg{width:14px;height:14px}
+    .callbar:hover{filter:brightness(.98)}
+    .hero-bottom{
+      margin-top:28px;
+      display:flex;align-items:center;justify-content:space-between;
+      color:rgba(255,255,255,.50);
+      font-size:11px;
+      letter-spacing:.26em;
+      text-transform:uppercase;
     }
 
-    .faq { display: grid; gap: .85rem; }
-    details {
-      border: 1px solid #222;
-      border-radius: var(--radius);
-      background: rgba(255,255,255,.02);
-      overflow: hidden;
+    /* Capabilities / cards */
+    .cap-head{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: clamp(18px, 3vw, 40px);
+      align-items:end;
+      margin-bottom:34px;
     }
-    summary {
-      list-style: none;
-      cursor: pointer;
-      padding: 1.2rem 1.3rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      color: var(--text);
-      font-size: 1.05rem;
-      font-weight: 600;
+    .cap-title{
+      font-size:clamp(52px, 6.8vw, 104px);
+      font-weight:950;
+      letter-spacing:-.04em;
     }
-    summary::-webkit-details-marker { display: none; }
-    summary::after {
-      content: "+";
-      color: #8a8a8a;
-      font-size: 1.35rem;
-      line-height: 1;
-      transition: transform .2s ease, color .2s ease;
-    }
-    details[open] summary::after { transform: rotate(45deg); color: var(--text); }
-    .faq-body {
-      padding: 0 1.3rem 1.25rem;
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: .98rem;
+    .cap-title .dot{opacity:.22}
+    .cap-copy{
+      color:rgba(255,255,255,.72);
+      max-width:36ch;
+      font-size:14px;
+      line-height:1.6;
     }
 
-    footer {
-      border-top: 1px solid var(--border);
-      background: linear-gradient(to top, #111, var(--bg));
-      padding-block: 4.5rem 3.25rem;
-      text-align: center;
+    .card-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(14px, 2vw, 22px);
+      align-items:stretch;
     }
-    .footer-kicker {
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .22em;
-      font-size: .75rem;
-      margin-bottom: 1.25rem;
+    .service-card{
+      position:relative;
+      border-radius:28px;
+      overflow:hidden;
+      min-height:240px;
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:var(--shadow-soft);
+      background:
+        radial-gradient(900px 500px at 20% 20%, rgba(255,255,255,.10), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
     }
-    .social {
-      display: flex;
-      justify-content: center;
-      gap: 1.4rem;
-      margin-top: 2.1rem;
-      margin-bottom: 1.6rem;
+    /* Faux “photo” layer (replace with real images if you want) */
+    .service-card::before{
+      content:"";
+      position:absolute;inset:0;
+      background:
+        radial-gradient(900px 600px at 30% 20%, rgba(255,255,255,.16), transparent 60%),
+        radial-gradient(900px 600px at 70% 60%, rgba(0,0,0,.55), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,.10), rgba(0,0,0,.65));
+      opacity:.55;
+      transform:scale(1.06);
+      filter:saturate(.9) contrast(1.05);
     }
-    .social a {
-      width: 44px; height: 44px;
-      border-radius: 14px;
-      border: 1px solid #222;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255,255,255,.02);
-      transition: transform .18s ease, border-color .18s ease;
+    .service-card::after{
+      content:"";
+      position:absolute;inset:0;
+      background:linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.75));
     }
-    .social a:hover { transform: translateY(-2px); border-color: #333; }
-    .social svg { width: 22px; height: 22px; fill: #b0b0b0; }
-    .legal { font-size: .78rem; color: #4a4a4a; }
+    .service-content{
+      position:relative;
+      height:100%;
+      padding:22px 22px 18px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:18px;
+    }
+    .icon-pill{
+      width:44px;height:44px;border-radius:14px;
+      display:grid;place-items:center;
+      background:rgba(255,255,255,.92);
+      color:#000;
+      box-shadow:0 18px 40px rgba(0,0,0,.35);
+    }
+    .icon-pill svg{width:18px;height:18px}
+    .service-title{
+      font-size:22px;font-weight:900;letter-spacing:-.02em;
+      margin-bottom:8px;
+    }
+    .service-desc{
+      font-size:13px;color:rgba(255,255,255,.72);
+      max-width:44ch;
+    }
+    .service-foot{
+      display:flex;align-items:center;justify-content:space-between;
+      padding-top:14px;
+      border-top:1px solid rgba(255,255,255,.10);
+      color:rgba(255,255,255,.45);
+      font-size:11px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+    }
+    .card-wide{grid-column:1 / span 1}
+    .card-wide-alt{grid-column:1 / span 1}
 
-    @media (max-width: 900px){
-      .card { grid-column: span 12; }
-      .section-head { flex-direction: column; align-items: flex-start; }
-      .nav-links { display: none; }
+    /* Make 3rd card sit under left column like screenshot */
+    .third{
+      grid-column: 1 / span 1;
     }
-    @media (max-width: 520px){
-      .btn { width: 100%; }
-      .cta-row { gap: .7rem; }
-      .hero p { max-width: 100%; }
+
+    /* Reviews */
+    .reviews-head{
+      display:flex;align-items:flex-start;justify-content:space-between;gap:24px;
+      margin-bottom:18px;
+    }
+    .reviews-title{
+      font-size:clamp(52px, 6.8vw, 104px);
+      font-weight:950;
+      letter-spacing:-.04em;
+    }
+    .reviews-title .dot{opacity:.22}
+    .reviews-line{
+      flex:1;
+      margin-top:42px;
+      height:1px;background:var(--line);
+      max-width:420px;
+      opacity:.8;
+    }
+
+    .review-list{
+      margin-top:28px;
+      border-top:1px solid var(--line-2);
+    }
+    .review{
+      display:grid;
+      grid-template-columns: 70px 1fr;
+      gap:22px;
+      padding:26px 0;
+      border-bottom:1px solid var(--line-2);
+      align-items:start;
+    }
+    .quote-mark{
+      width:56px;height:56px;
+      display:grid;place-items:center;
+      color:rgba(255,255,255,.70);
+    }
+    .quote-mark svg{width:30px;height:30px;opacity:.9}
+    .review-text{
+      font-size:clamp(18px, 2.1vw, 22px);
+      font-weight:750;
+      color:rgba(255,255,255,.90);
+      letter-spacing:-.02em;
+      line-height:1.25;
+      margin-bottom:18px;
+      max-width:62ch;
+    }
+    .review-meta{
+      display:flex;align-items:center;gap:12px;
+      color:rgba(255,255,255,.65);
+    }
+    .avatar{
+      width:34px;height:34px;border-radius:50%;
+      background:rgba(255,255,255,.95);
+      color:#000;
+      display:grid;place-items:center;
+      font-weight:950;
+      font-size:12px;
+    }
+    .meta-lines{
+      display:flex;flex-direction:column;gap:2px;
+      font-size:11px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+    }
+    .meta-lines strong{color:#fff}
+
+    /* FAQ */
+    .faq-title{
+      font-size:clamp(52px, 6.8vw, 104px);
+      font-weight:950;
+      letter-spacing:-.04em;
+    }
+    .faq-title .dot{opacity:.22}
+    .faq-sub{margin-top:10px;max-width:52ch}
+    .faq-list{margin-top:28px;border-top:1px solid var(--line-2)}
+    details.faq-item{
+      border-bottom:1px solid var(--line-2);
+      padding:0;
+    }
+    details.faq-item summary{
+      list-style:none;
+      cursor:pointer;
+      padding:22px 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      font-size:clamp(18px, 2.3vw, 28px);
+      font-weight:900;
+      letter-spacing:-.02em;
+      color:#fff;
+    }
+    details.faq-item summary::-webkit-details-marker{display:none}
+    .plus{
+      width:44px;height:44px;border-radius:50%;
+      border:1px solid rgba(255,255,255,.22);
+      display:grid;place-items:center;
+      flex:0 0 auto;
+    }
+    .plus span{
+      display:block;
+      width:14px;height:14px;position:relative;
+    }
+    .plus span::before,.plus span::after{
+      content:"";position:absolute;inset:auto;
+      background:#fff;border-radius:2px;
+    }
+    .plus span::before{width:14px;height:2px;left:0;top:6px}
+    .plus span::after{width:2px;height:14px;left:6px;top:0;transition:transform .18s ease}
+    details[open] .plus span::after{transform:scaleY(0)}
+    .faq-body{
+      padding:0 0 22px 0;
+      max-width:70ch;
+      color:rgba(255,255,255,.70);
+      font-size:14px;
+      line-height:1.75;
+    }
+
+    /* Contact (light section) */
+    .contact{
+      background:var(--paper);
+      color:var(--ink);
+      padding:clamp(54px, 7vw, 96px) 0;
+      border-top:1px solid rgba(0,0,0,.08);
+    }
+    .contact .kicker{color:rgba(0,0,0,.55)}
+    .contact .kicker::before{background:rgba(0,0,0,.35)}
+    .contact-grid{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: clamp(18px, 3vw, 46px);
+      align-items:start;
+    }
+    .contact-title{
+      font-size:clamp(58px, 7.2vw, 118px);
+      font-weight:950;
+      letter-spacing:-.05em;
+      color:#000;
+    }
+    .contact-title .dot{opacity:.18}
+    .contact-actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:16px 22px;
+      border-radius:var(--pill);
+      font-weight:900;
+      letter-spacing:.06em;
+      border:2px solid rgba(0,0,0,.12);
+      background:#fff;
+      color:#000;
+      box-shadow:0 14px 44px rgba(0,0,0,.18);
+    }
+    .pill--dark{
+      background:#0b0b0b;color:#fff;border-color:#0b0b0b;
+      box-shadow:0 16px 52px rgba(0,0,0,.22);
+    }
+    .pill svg{width:16px;height:16px}
+    .contact-copy{
+      margin-top:18px;
+      color:rgba(0,0,0,.78);
+      font-weight:750;
+      font-size:clamp(18px, 2.2vw, 28px);
+      letter-spacing:-.02em;
+      line-height:1.15;
+      max-width:28ch;
+    }
+    .areas{
+      margin-top:34px;
+      padding-top:18px;
+      border-top:1px solid rgba(0,0,0,.10);
+    }
+    .areas .label{
+      font-size:11px;
+      letter-spacing:.28em;
+      text-transform:uppercase;
+      color:rgba(0,0,0,.45);
+      margin-bottom:10px;
+    }
+    .areas .list{
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:rgba(0,0,0,.75);
+      font-weight:900;
+    }
+
+    .contact-footer{
+      margin-top:44px;
+      border-top:1px solid rgba(0,0,0,.10);
+      padding-top:22px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+    .mark{
+      font-weight:950;
+      letter-spacing:-.02em;
+      color:#000;
+    }
+    .mark span{opacity:.18}
+    .social-row{
+      display:flex;gap:12px;align-items:center;
+    }
+    .social-btn{
+      width:42px;height:42px;border-radius:50%;
+      border:2px solid rgba(0,0,0,.12);
+      display:grid;place-items:center;
+      background:#fff;
+    }
+    .social-btn svg{width:18px;height:18px;fill:#000}
+    .copyright{
+      font-size:11px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:rgba(0,0,0,.45);
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns:1fr}
+      .hero-cta{justify-content:flex-start;margin-top:16px}
+      .cap-head{grid-template-columns:1fr}
+      .contact-grid{grid-template-columns:1fr}
+      .reviews-head{flex-direction:column}
+      .reviews-line{display:none}
+    }
+    @media (max-width: 760px){
+      .nav{display:none}
+      .card-grid{grid-template-columns:1fr}
+      .third{grid-column:auto}
+      .review{grid-template-columns:56px 1fr;gap:16px}
+      .callbar{max-width:100%}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{transition:none !important}
+      html{scroll-behavior:auto}
     }
   </style>
 </head>
 
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="#top" aria-label="a tiler home">a tiler<span>.</span></a>
 
-  <header class="site-header">
-    <div class="wrap nav" aria-label="Primary">
-      <a class="brand" href="#top" aria-label="a tiler home">
-        a tiler<small>.</small>
-      </a>
-
-      <nav class="nav-links" aria-label="Site">
+      <nav class="nav" aria-label="Primary navigation">
         <a href="#expertise">Expertise</a>
         <a href="#reviews">Reviews</a>
         <a href="#faq">FAQ</a>
-        <a href="#contact">Contact</a>
       </nav>
 
-      <a class="btn btn-secondary" href="tel:07496804869" aria-label="Call a tiler on 07496 804869">
-        Call
-      </a>
+      <a class="btn" href="tel:07496804869" aria-label="Call">Call</a>
     </div>
   </header>
 
-  <main id="main">
-    <section class="hero" id="top">
-      <div class="wrap">
-        <span class="eyebrow">Glasgow, UK</span>
-        <h1>a tiler.</h1>
-        <p>
-          Specialist in bespoke mirror mosaic designs and precision tiling.
-          Transforming interiors across the West End and Southside.
-        </p>
-
-        <div class="cta-row">
-          <a class="btn btn-primary" href="tel:07496804869" aria-label="Call now">
-            Call now
-          </a>
-          <a class="btn btn-secondary" href="#contact">
-            Get a quote
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="expertise">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>Expertise.</h2>
-          <p>High-end tiling with clean lines, strong prep, and detail that holds up.</p>
-        </div>
-
-        <div class="grid" role="list">
-          <article class="card" role="listitem">
-            <h3>Mirror Mosaics</h3>
-            <p>Signature bespoke designs. Hand-cut mirror work that creates depth, light, and a luxury finish unique to your space.</p>
-          </article>
-
-          <article class="card" role="listitem">
-            <h3>Bathrooms</h3>
-            <p>Complete tiling solutions for wet rooms and en-suites. Waterproofing, porcelain, marble, and intricate floor patterns.</p>
-          </article>
-
-          <article class="card" role="listitem">
-            <h3>Kitchens</h3>
-            <p>High-end splashbacks and floor tiling. Perfect alignment and a durable, wipe-clean finish.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="reviews">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>Reviews.</h2>
-          <p>Real feedback from clients across Glasgow.</p>
-        </div>
-
-        <div class="reviews">
-          <blockquote>
-            <p>"The bespoke mirror wall a tiler created for our hallway is incredible. It’s completely transformed the light in the house."</p>
-            <cite>Sarah, West End</cite>
-          </blockquote>
-
-          <blockquote>
-            <p>"Precise, clean, and modern. The tiling in our new bathroom is flawless. Highly recommend if you want a high-end finish."</p>
-            <cite>Marc, Southside</cite>
-          </blockquote>
-
-          <blockquote>
-            <p>"We struggled to find someone to do our mosaic splashback properly until we found a tiler. Excellent communication."</p>
-            <cite>Emma, Bearsden</cite>
-          </blockquote>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="faq">
-      <div class="wrap">
-        <div class="section-head">
-          <h2>FAQ.</h2>
-          <p>Quick answers before you call.</p>
-        </div>
-
-        <div class="faq">
-          <details>
-            <summary>Where are you based?</summary>
-            <div class="faq-body">
-              We are based in Glasgow and cover surrounding areas including the West End, Southside, Bearsden, Milngavie, and Newton Mearns.
-            </div>
-          </details>
-
-          <details>
-            <summary>What is a bespoke mirror mosaic?</summary>
-            <div class="faq-body">
-              Unlike pre-bought sheets, bespoke mirror mosaics are designed to your wall dimensions. We cut and arrange mirror glass to create a unique, shimmering effect.
-            </div>
-          </details>
-
-          <details>
-            <summary>Do I supply the tiles?</summary>
-            <div class="faq-body">
-              Most clients purchase their own tiles to get the exact style they want. If you like, we can advise on good local suppliers and what to look for.
-            </div>
-          </details>
-
-          <details>
-            <summary>How do I book?</summary>
-            <div class="faq-body">
-              Call to discuss your project. We can talk through the job, then arrange a site visit if needed and provide a quote.
-            </div>
-          </details>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer id="contact" aria-label="Contact">
+  <!-- Hero -->
+  <section class="hero" id="top">
     <div class="wrap">
-      <div class="footer-kicker">Start your project</div>
+      <div class="hero-grid">
+        <div>
+          <div class="kicker">Glasgow Specialist</div>
 
-      <a class="btn btn-primary" href="tel:07496804869" aria-label="Call a tiler on 07496 804869">
-        Call us
-      </a>
+          <h1 class="hero-title">a tiler<span class="dot">.</span></h1>
 
-      <div class="social" aria-label="Social links">
-        <a href="https://www.instagram.com/atilerglasgow/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-          </svg>
-        </a>
+          <div class="hero-lead">
+            Bespoke mirror mosaics and surgical precision. Crafting luxury for Glasgow's most iconic residences.
+          </div>
 
-        <a href="https://www.facebook.com/spbtiling/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.378 14.192 5 15.115 5H18V0h-3.808C10.596 0 9 1.583 9 4.615V8z"/>
-          </svg>
-        </a>
+          <div class="hero-bottom">
+            <div>Availability: Accepting bookings</div>
+          </div>
+        </div>
 
-        <a href="https://www.tiktok.com/@atilerglasgow" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93v6.14c0 3.48-2.55 6.47-5.99 6.84-4.22.46-7.79-2.53-8.2-6.68-.41-4.14 2.58-7.9 6.74-8.25.79-.06 1.58-.02 2.37.11v4.15c-.94-.34-1.94-.39-2.91-.14-1.62.42-2.77 1.94-2.67 3.61.1 1.83 1.58 3.32 3.41 3.33 1.83.01 3.33-1.47 3.34-3.31V3.02c-.05-1.29-.05-1.29 0-2.79z"/>
-          </svg>
-        </a>
+        <div class="hero-cta">
+          <a class="callbar" href="tel:07496804869" aria-label="Call now">
+            Call now
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor" d="M14 5h5v5h-2V8.41l-8.29 8.3-1.42-1.42 8.3-8.29H14V5z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Expertise -->
+  <section class="section" id="expertise">
+    <div class="wrap">
+      <div class="cap-head">
+        <div>
+          <div class="kicker" style="margin-bottom:14px;">
+            <span style="display:inline-flex;align-items:center;gap:10px;">
+              <span style="width:8px;height:8px;border-radius:50%;background:#3a77ff;display:inline-block;opacity:.9;"></span>
+              Our capabilities
+            </span>
+          </div>
+
+          <h2 class="cap-title">Signature<br/>Precision<span class="dot">.</span></h2>
+        </div>
+
+        <p class="cap-copy">
+          Where high-end design meets architectural rigor. Every line is intentional.
+        </p>
       </div>
 
-      <p class="legal">&copy; <span id="year"></span> a tiler. Glasgow.</p>
+      <div class="card-grid" role="list">
+        <article class="service-card" role="listitem" aria-label="Mirror Mosaics">
+          <div class="service-content">
+            <div class="icon-pill" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path fill="currentColor" d="M12 2a6 6 0 0 1 6 6v8a6 6 0 1 1-12 0V8a6 6 0 0 1 6-6Zm0 2a4 4 0 0 0-4 4v8a4 4 0 1 0 8 0V8a4 4 0 0 0-4-4Z"/>
+              </svg>
+            </div>
+
+            <div>
+              <div class="service-title">Mirror Mosaics</div>
+              <div class="service-desc">
+                Signature bespoke designs. Hand-cut mirror work that creates depth, light, and a luxury finish unique to your space.
+              </div>
+            </div>
+
+            <div class="service-foot">
+              <span>Premium quality</span>
+              <span aria-hidden="true"> </span>
+            </div>
+          </div>
+        </article>
+
+        <article class="service-card" role="listitem" aria-label="Bathrooms">
+          <div class="service-content">
+            <div class="icon-pill" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path fill="currentColor" d="M7 3a2 2 0 0 0-2 2v8h16V7a4 4 0 0 0-4-4H7Zm14 12H3v2a4 4 0 0 0 4 4h10a4 4 0 0 0 4-4v-2ZM7 5h10a2 2 0 0 1 2 2v4H7V5Z"/>
+              </svg>
+            </div>
+
+            <div>
+              <div class="service-title">Bathrooms</div>
+              <div class="service-desc">
+                Complete tiling solutions for wet rooms and en-suites. Waterproofing, porcelain, marble, and intricate floor patterns.
+              </div>
+            </div>
+
+            <div class="service-foot">
+              <span>Premium quality</span>
+              <span aria-hidden="true"> </span>
+            </div>
+          </div>
+        </article>
+
+        <article class="service-card third" role="listitem" aria-label="Kitchens">
+          <div class="service-content">
+            <div class="icon-pill" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path fill="currentColor" d="M4 3h16v18H4V3Zm2 2v14h12V5H6Zm2 2h8v2H8V7Zm0 4h8v2H8v-2Z"/>
+              </svg>
+            </div>
+
+            <div>
+              <div class="service-title">Kitchens</div>
+              <div class="service-desc">
+                High-end splashbacks and floor tiling. Perfect alignment and a durable, wipe-clean finish.
+              </div>
+            </div>
+
+            <div class="service-foot">
+              <span>Premium quality</span>
+              <span aria-hidden="true"> </span>
+            </div>
+          </div>
+        </article>
+      </div>
     </div>
-  </footer>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Reviews -->
+  <section class="section" id="reviews">
+    <div class="wrap">
+      <div class="reviews-head">
+        <h2 class="reviews-title">Reviews<span class="dot">.</span></h2>
+        <div class="reviews-line" aria-hidden="true"></div>
+      </div>
+
+      <div class="review-list">
+        <div class="review">
+          <div class="quote-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path fill="currentColor" d="M7.2 17.6H4.6c-.9 0-1.6-.7-1.6-1.6V12c0-3.9 2.2-6.8 6.1-8.1l.7 1.8C7.2 6.6 6 8.2 6 10h1.2c.9 0 1.6.7 1.6 1.6v4.4c0 .9-.7 1.6-1.6 1.6Zm10.2 0h-2.6c-.9 0-1.6-.7-1.6-1.6V12c0-3.9 2.2-6.8 6.1-8.1l.7 1.8c-2.6.9-3.8 2.5-3.8 4.3h1.2c.9 0 1.6.7 1.6 1.6v4.4c0 .9-.7 1.6-1.6 1.6Z"/>
+            </svg>
+          </div>
+
+          <div>
+            <div class="review-text">
+              "The bespoke mirror wall a tiler created for our hallway is incredible. It's completely transformed the light in the house."
+            </div>
+
+            <div class="review-meta">
+              <div class="avatar" aria-hidden="true">S</div>
+              <div class="meta-lines">
+                <strong>Sarah</strong>
+                <span>West End</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review">
+          <div class="quote-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path fill="currentColor" d="M7.2 17.6H4.6c-.9 0-1.6-.7-1.6-1.6V12c0-3.9 2.2-6.8 6.1-8.1l.7 1.8C7.2 6.6 6 8.2 6 10h1.2c.9 0 1.6.7 1.6 1.6v4.4c0 .9-.7 1.6-1.6 1.6Zm10.2 0h-2.6c-.9 0-1.6-.7-1.6-1.6V12c0-3.9 2.2-6.8 6.1-8.1l.7 1.8c-2.6.9-3.8 2.5-3.8 4.3h1.2c.9 0 1.6.7 1.6 1.6v4.4c0 .9-.7 1.6-1.6 1.6Z"/>
+            </svg>
+          </div>
+
+          <div>
+            <div class="review-text">
+              "Precise, clean, and modern. The tiling in our new bathroom is flawless. Highly recommend if you want a high-end finish."
+            </div>
+
+            <div class="review-meta">
+              <div class="avatar" aria-hidden="true">M</div>
+              <div class="meta-lines">
+                <strong>Marc</strong>
+                <span>Southside</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review" style="border-bottom:none;">
+          <div class="quote-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path fill="currentColor" d="M7.2 17.6H4.6c-.9 0-1.6-.7-1.6-1.6V12c0-3.9 2.2-6.8 6.1-8.1l.7 1.8C7.2 6.6 6 8.2 6 10h1.2c.9 0 1.6.7 1.6 1.6v4.4c0 .9-.7 1.6-1.6 1.6Zm10.2 0h-2.6c-.9 0-1.6-.7-1.6-1.6V12c0-3.9 2.2-6.8 6.1-8.1l.7 1.8c-2.6.9-3.8 2.5-3.8 4.3h1.2c.9 0 1.6.7 1.6 1.6v4.4c0 .9-.7 1.6-1.6 1.6Z"/>
+            </svg>
+          </div>
+
+          <div>
+            <div class="review-text">
+              "We struggled to find someone to do our mosaic splashback properly until we found a tiler. Excellent communication."
+            </div>
+
+            <div class="review-meta">
+              <div class="avatar" aria-hidden="true">E</div>
+              <div class="meta-lines">
+                <strong>Emma</strong>
+                <span>Bearsden</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="wrap">
+      <h2 class="faq-title">Details<span class="dot">.</span></h2>
+      <p class="faq-sub">Everything you need to know about our process.</p>
+
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>
+            <span>Where are you based?</span>
+            <span class="plus" aria-hidden="true"><span></span></span>
+          </summary>
+          <div class="faq-body">
+            We are based in Glasgow and cover surrounding areas including the West End, Southside, Bearsden, Milngavie, and Newton Mearns.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            <span>What is a bespoke mirror mosaic?</span>
+            <span class="plus" aria-hidden="true"><span></span></span>
+          </summary>
+          <div class="faq-body">
+            Unlike pre-bought sheets, bespoke mirror mosaics are designed to your wall dimensions. We cut and arrange mirror glass to create a unique, shimmering effect.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            <span>Do I supply the tiles?</span>
+            <span class="plus" aria-hidden="true"><span></span></span>
+          </summary>
+          <div class="faq-body">
+            Most clients purchase their own tiles to get the exact style they want. If you want, we can advise on suitable suppliers and what to look for.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>
+            <span>How do I book?</span>
+            <span class="plus" aria-hidden="true"><span></span></span>
+          </summary>
+          <div class="faq-body">
+            Call to discuss the job. We can quote from details and photos, or arrange a site visit for larger projects.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact (light) -->
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="kicker">Contact us</div>
+
+      <div class="contact-grid">
+        <div>
+          <h2 class="contact-title">Start<br/>Now<span class="dot">.</span></h2>
+
+          <div class="contact-actions">
+            <a class="pill pill--dark" href="tel:07496804869" aria-label="Call 07496 804869">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M6.6 10.8c1.3 2.6 3.5 4.8 6.1 6.1l2-2c.2-.2.6-.3.9-.2 1 .3 2 .5 3.1.5.5 0 .9.4.9.9V20c0 .5-.4.9-.9.9C10.7 20.9 3.1 13.3 3.1 4.9c0-.5.4-.9.9-.9h3.1c.5 0 .9.4.9.9 0 1.1.2 2.1.5 3.1.1.3 0 .7-.2.9l-2 2Z"/>
+              </svg>
+              07496 804869
+            </a>
+
+            <a class="pill" href="https://www.instagram.com/atilerglasgow/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @atiler">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm-5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5Zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5ZM17.8 6.2a1 1 0 1 1-1 1 1 1 0 0 1 1-1Z"/>
+              </svg>
+              @atiler
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <div class="contact-copy">
+            Glasgow's premier tiling partner for high-end residential interiors.
+          </div>
+
+          <div class="areas">
+            <div class="label">Areas covered</div>
+            <div class="list">West End • Southside • Bearsden • Milngavie • Newton Mearns</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-footer">
+        <div class="mark">a tiler<span>.</span></div>
+
+        <div class="social-row" aria-label="Social links">
+          <a class="social-btn" href="https://www.facebook.com/spbtiling/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 8.5V7c0-.7.4-1 1.1-1H17V3h-2.6C11.9 3 11 4.5 11 6.7v1.8H9v3h2V21h3v-9.5h2.4l.6-3H14z"/>
+            </svg>
+          </a>
+          <a class="social-btn" href="https://www.tiktok.com/@atilerglasgow" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 3c.4 2.3 1.9 3.7 4 4v3c-1.5 0-2.8-.4-4-1.2V15c0 3-2.4 5-5.2 5A5 5 0 0 1 4 15c0-2.9 2.5-5.1 5.7-4.8v3.1c-1.2-.2-2.3.5-2.5 1.7-.2 1.2.6 2.2 1.7 2.4 1.3.2 2.5-.8 2.5-2.1V3h2.6Z"/>
+            </svg>
+          </a>
+          <a class="social-btn" href="https://www.instagram.com/atilerglasgow/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Z"/>
+              <path d="M12 7.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5Zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5Z"/>
+              <path d="M17.8 6.2a1 1 0 1 1-1 1 1 1 0 0 1 1-1Z"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="copyright">&copy; <span id="year"></span> a tiler. Glasgow, UK.</div>
+      </div>
+    </div>
+  </section>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
-</html>
+              </html>
