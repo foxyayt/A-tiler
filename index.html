@@ -7,35 +7,15 @@
   <title>a tiler | Specialist Tiling Glasgow</title>
   <meta name="description" content="Glasgow based specialist focusing on bespoke mirror mosaic designs, luxury bathrooms, and kitchens." />
 
-  <!-- Canonical (set this to your live URL) -->
-  <!-- <link rel="canonical" href="https://foxyayt.github.io/A-tiler/" /> -->
-
-  <!-- Open Graph / Social -->
-  <meta property="og:title" content="a tiler | Specialist Tiling Glasgow" />
-  <meta property="og:description" content="Bespoke mirror mosaics and precision tiling across Glasgow." />
-  <meta property="og:type" content="website" />
-  <!-- <meta property="og:url" content="https://foxyayt.github.io/A-tiler/" /> -->
-  <!-- <meta property="og:image" content="/og.jpg" /> -->
-
   <meta name="theme-color" content="#050505" />
 
-  <!-- If you add these files later, uncomment:
-  <link rel="icon" href="/favicon.ico" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  -->
-
   <style>
-    /* =========================
-       Design tokens
-    ========================== */
     :root{
       --bg: #050505;
       --surface: #0f0f0f;
-      --surface-2: #121212;
       --text: #ffffff;
       --muted: #9a9a9a;
       --border: #222;
-      --accent: #d1d1d1;
 
       --radius: 18px;
       --radius-pill: 999px;
@@ -52,9 +32,6 @@
       --focus: 0 0 0 3px rgba(255,255,255,.18);
     }
 
-    /* =========================
-       Base + reset
-    ========================== */
     *, *::before, *::after { box-sizing: border-box; }
     * { margin: 0; }
     html { scroll-behavior: smooth; }
@@ -68,7 +45,6 @@
       -webkit-font-smoothing: antialiased;
       text-rendering: geometricPrecision;
     }
-    img, svg { display: block; max-width: 100%; }
     a { color: inherit; text-decoration: none; }
     p { color: var(--muted); }
     h1, h2, h3 {
@@ -83,9 +59,6 @@
       * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
     }
 
-    /* =========================
-       Layout helpers
-    ========================== */
     .wrap {
       max-width: var(--max);
       margin-inline: auto;
@@ -96,9 +69,9 @@
       border-top: 1px solid var(--border);
     }
     .section:first-of-type { border-top: 0; }
+
     .eyebrow {
       display: inline-flex;
-      gap: .5rem;
       align-items: center;
       padding: .45rem 1rem;
       border: 1px solid #333;
@@ -110,6 +83,7 @@
       user-select: none;
       background: rgba(255,255,255,.02);
     }
+
     .skip-link {
       position: absolute;
       left: -999px;
@@ -122,9 +96,6 @@
     }
     .skip-link:focus { left: 1rem; }
 
-    /* =========================
-       Header / hero
-    ========================== */
     .site-header {
       border-bottom: 1px solid var(--border);
       padding-block: 1.25rem;
@@ -147,10 +118,8 @@
       font-weight: 800;
       letter-spacing: -0.03em;
     }
-    .brand small {
-      color: #4b4b4b;
-      font-weight: 800;
-    }
+    .brand small { color: #4b4b4b; font-weight: 800; }
+
     .nav-links {
       display: flex;
       gap: 1.1rem;
@@ -163,12 +132,6 @@
     .hero {
       padding-block: clamp(3.25rem, 8vw, 6rem);
       border-bottom: 1px solid var(--border);
-    }
-    .hero-grid {
-      display: grid;
-      gap: 2.25rem;
-      align-items: center;
-      grid-template-columns: 1.3fr .7fr;
     }
     .hero h1 {
       font-size: clamp(3.25rem, 9vw, 6.25rem);
@@ -211,11 +174,9 @@
       box-shadow: 0 8px 26px rgba(255,255,255,.08);
       user-select: none;
     }
-    .btn-primary {
-      background: var(--btn-grad);
-      color: #000;
-    }
+    .btn-primary { background: var(--btn-grad); color: #000; }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,255,255,.14); }
+
     .btn-secondary {
       background: rgba(255,255,255,.06);
       border: 1px solid #2a2a2a;
@@ -224,36 +185,6 @@
     }
     .btn-secondary:hover { filter: brightness(1.08); }
 
-    .hero-card {
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border: 1px solid #222;
-      border-radius: var(--radius);
-      padding: 1.25rem;
-      box-shadow: var(--shadow);
-    }
-    .hero-card h2 {
-      font-size: 1rem;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: #e9e9e9;
-      margin-bottom: .6rem;
-    }
-    .hero-card ul { list-style: none; display: grid; gap: .6rem; }
-    .hero-card li {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      color: var(--muted);
-      font-size: .95rem;
-      border-top: 1px solid rgba(255,255,255,.06);
-      padding-top: .6rem;
-    }
-    .hero-card li:first-child { border-top: 0; padding-top: 0; }
-    .hero-card strong { color: var(--text); font-weight: 700; }
-
-    /* =========================
-       Services
-    ========================== */
     .section-head {
       display: flex;
       align-items: baseline;
@@ -285,9 +216,6 @@
     .card h3 { font-size: 1.25rem; margin-bottom: .55rem; }
     .card p { color: var(--muted); font-size: .98rem; line-height: 1.65; }
 
-    /* =========================
-       Reviews
-    ========================== */
     .reviews {
       display: grid;
       gap: 1.2rem;
@@ -315,13 +243,7 @@
       font-weight: 700;
     }
 
-    /* =========================
-       FAQ (no JS, accessible)
-    ========================== */
-    .faq {
-      display: grid;
-      gap: .85rem;
-    }
+    .faq { display: grid; gap: .85rem; }
     details {
       border: 1px solid #222;
       border-radius: var(--radius);
@@ -348,10 +270,7 @@
       line-height: 1;
       transition: transform .2s ease, color .2s ease;
     }
-    details[open] summary::after {
-      transform: rotate(45deg);
-      color: var(--text);
-    }
+    details[open] summary::after { transform: rotate(45deg); color: var(--text); }
     .faq-body {
       padding: 0 1.3rem 1.25rem;
       color: var(--muted);
@@ -359,9 +278,6 @@
       font-size: .98rem;
     }
 
-    /* =========================
-       Footer
-    ========================== */
     footer {
       border-top: 1px solid var(--border);
       background: linear-gradient(to top, #111, var(--bg));
@@ -396,15 +312,10 @@
     .social svg { width: 22px; height: 22px; fill: #b0b0b0; }
     .legal { font-size: .78rem; color: #4a4a4a; }
 
-    /* =========================
-       Responsive
-    ========================== */
     @media (max-width: 900px){
-      .hero-grid { grid-template-columns: 1fr; }
-      .hero-card { order: 2; }
       .card { grid-column: span 12; }
       .section-head { flex-direction: column; align-items: flex-start; }
-      .nav-links { display: none; } /* keep it clean on mobile */
+      .nav-links { display: none; }
     }
     @media (max-width: 520px){
       .btn { width: 100%; }
@@ -412,18 +323,6 @@
       .hero p { max-width: 100%; }
     }
   </style>
-
-  <!-- Local Business structured data (edit as needed) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "a tiler",
-    "description": "Specialist in bespoke mirror mosaic designs & precision tiling in Glasgow.",
-    "areaServed": "Glasgow, UK",
-    "telephone": "+447496804869"
-  }
-  </script>
 </head>
 
 <body>
@@ -450,34 +349,22 @@
 
   <main id="main">
     <section class="hero" id="top">
-      <div class="wrap hero-grid">
-        <div>
-          <span class="eyebrow">Glasgow, UK</span>
-          <h1>a tiler.</h1>
-          <p>
-            Specialist in bespoke mirror mosaic designs and precision tiling.
-            Transforming interiors across the West End and Southside.
-          </p>
+      <div class="wrap">
+        <span class="eyebrow">Glasgow, UK</span>
+        <h1>a tiler.</h1>
+        <p>
+          Specialist in bespoke mirror mosaic designs and precision tiling.
+          Transforming interiors across the West End and Southside.
+        </p>
 
-          <div class="cta-row">
-            <a class="btn btn-primary" href="tel:07496804869" aria-label="Call now">
-              Call now
-            </a>
-            <a class="btn btn-secondary" href="#contact">
-              Get a quote
-            </a>
-          </div>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="tel:07496804869" aria-label="Call now">
+            Call now
+          </a>
+          <a class="btn btn-secondary" href="#contact">
+            Get a quote
+          </a>
         </div>
-
-        <aside class="hero-card" aria-label="Quick details">
-          <h2>What you get</h2>
-          <ul>
-            <li><span>Finish</span> <strong>Sharp, premium</strong></li>
-            <li><span>Speciality</span> <strong>Mirror mosaics</strong></li>
-            <li><span>Areas</span> <strong>West End, Southside</strong></li>
-            <li><span>Contact</span> <strong>07496 804869</strong></li>
-          </ul>
-        </aside>
       </div>
     </section>
 
@@ -485,9 +372,7 @@
       <div class="wrap">
         <div class="section-head">
           <h2>Expertise.</h2>
-          <p>
-            High-end tiling with clean lines, strong prep, and detail that holds up.
-          </p>
+          <p>High-end tiling with clean lines, strong prep, and detail that holds up.</p>
         </div>
 
         <div class="grid" role="list">
@@ -513,9 +398,7 @@
       <div class="wrap">
         <div class="section-head">
           <h2>Reviews.</h2>
-          <p>
-            Real feedback from clients across Glasgow.
-          </p>
+          <p>Real feedback from clients across Glasgow.</p>
         </div>
 
         <div class="reviews">
@@ -541,9 +424,7 @@
       <div class="wrap">
         <div class="section-head">
           <h2>FAQ.</h2>
-          <p>
-            Quick answers before you call.
-          </p>
+          <p>Quick answers before you call.</p>
         </div>
 
         <div class="faq">
@@ -612,7 +493,6 @@
   </footer>
 
   <script>
-    // Tiny enhancement only: current year
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
